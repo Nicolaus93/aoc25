@@ -60,7 +60,7 @@ pub fn solve03(lines: impl Iterator<Item = io::Result<String>>) -> io::Result<i6
         println!("Line {}", i);
         let line = line?;
         let bytes = line.as_bytes();
-        // let m = part_1(&bytes);
+        println!("part 1 {}", part_1(&bytes));
         let m = part_2(&bytes);
 
         total += m;  // Add the result for the current line
