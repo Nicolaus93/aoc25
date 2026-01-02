@@ -17,10 +17,6 @@ impl fmt::Display for Point3D {
 }
 
 impl Point3D {
-    // Constructor for Point3D
-    fn new(x: i64, y: i64, z: i64) -> Self {
-        Point3D { x, y, z }
-    }
 
     // Method to create a Point3D from a string like "1,2,3"
     fn from_string(s: &str) -> Result<Self, &'static str> {
