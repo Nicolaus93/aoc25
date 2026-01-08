@@ -7,12 +7,14 @@ mod day06;
 mod day07;
 mod day08;
 mod day09;
+mod day10;
+mod day11;
 
 use std::fs::File;
 use std::io::{self, BufRead, BufReader};
 
 fn main() -> io::Result<()> {
-    let day = 9;
+    let day = 11;
     let solve = match day {
         1 => day01::solve01,
         2 => day02::solve02,
@@ -23,6 +25,8 @@ fn main() -> io::Result<()> {
         7 => day07::solve,
         8 => day08::solve,
         9 => day09::solve,
+        10 => day10::solve,
+        11 => day11::solve,
         _ => {|_| Ok(-1)}
     };
     let filename = format!("assets/input{:02}.txt", day);
