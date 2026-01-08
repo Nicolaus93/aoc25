@@ -1,9 +1,9 @@
-use std::collections::{HashSet, HashMap};
+use std::collections::{HashMap, HashSet};
 use std::io;
 
 fn explore(
-    mut i: usize, 
-    j: usize, 
+    mut i: usize,
+    j: usize,
     matrix: &Vec<Vec<char>>,
     splits: &mut HashSet<(usize, usize)>,
     visited: &mut HashSet<(usize, usize)>,
@@ -26,7 +26,12 @@ fn explore(
     }
 }
 
-fn get_all_paths(mut i: usize, j: usize, matrix: &Vec<Vec<char>>, solutions: &mut HashMap<(usize, usize), i64>) -> i64 {
+fn get_all_paths(
+    mut i: usize,
+    j: usize,
+    matrix: &Vec<Vec<char>>,
+    solutions: &mut HashMap<(usize, usize), i64>,
+) -> i64 {
     if solutions.contains_key(&(i, j)) {
         return solutions[&(i, j)];
     }
@@ -46,21 +51,21 @@ fn get_all_paths(mut i: usize, j: usize, matrix: &Vec<Vec<char>>, solutions: &mu
                 res += partial_sol;
             }
             // solutions.insert((i, j), res);
-            return res;    
+            return res;
         }
         i += 1;
     }
     solutions.insert((i, j), 1);
     1
 }
- 
+
 pub fn solve(lines: impl Iterator<Item = io::Result<String>>) -> io::Result<i64> {
     let mut matrix: Vec<Vec<char>> = Vec::new();
     for line in lines {
         let line = line?;
         matrix.push(line.chars().collect());
     }
-    
+
     let n = matrix.len();
     let m = matrix[0].len();
     let mut splits: HashSet<(usize, usize)> = HashSet::new();
@@ -78,8 +83,6 @@ pub fn solve(lines: impl Iterator<Item = io::Result<String>>) -> io::Result<i64>
     }
     Ok(splits.len() as i64)
 }
-
-
 
 #[cfg(test)]
 mod tests {

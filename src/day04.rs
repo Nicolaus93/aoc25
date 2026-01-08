@@ -1,12 +1,18 @@
 use std::io::{self};
 
 const POSITIONS: [(isize, isize); 8] = [
-    (-1, -1), (0, -1), (1, -1), (-1, 0), (1, 0), (-1, 1), (0, 1), (1, 1),
+    (-1, -1),
+    (0, -1),
+    (1, -1),
+    (-1, 0),
+    (1, 0),
+    (-1, 1),
+    (0, 1),
+    (1, 1),
 ];
 const BYTE_OF_AT: u8 = b'@'; // This is a byte literal for '@'
 
 fn explore(matrix: &Vec<Vec<u8>>, i: usize, j: usize, n_rows: usize, n_cols: usize) -> bool {
-    
     let mut count: usize = 0;
     for (x, y) in POSITIONS {
         let row = i as isize + x;
@@ -24,16 +30,15 @@ fn explore(matrix: &Vec<Vec<u8>>, i: usize, j: usize, n_rows: usize, n_cols: usi
             }
         }
     }
-    
+
     true
 }
 
-
-fn part2(matrix: & mut Vec<Vec<u8>>) -> usize {
+fn part2(matrix: &mut Vec<Vec<u8>>) -> usize {
     let mut ans = 0;
     let n = matrix.len();
     let m = matrix[0].len();
-    
+
     let max_it = 50000;
     for _ in 0..max_it {
         let mut idxs: Vec<(usize, usize)> = vec![];
@@ -54,21 +59,21 @@ fn part2(matrix: & mut Vec<Vec<u8>>) -> usize {
             matrix[i][j] = b'.';
         }
     }
-    ans 
+    ans
 }
 
 pub fn solve04(lines: impl Iterator<Item = io::Result<String>>) -> io::Result<i64> {
     let mut ans = 0;
-    
+
     // Collect the lines to calculate NUM_ROWS and NUM_COLS
     let matrix: Vec<String> = lines.collect::<Result<Vec<String>, _>>()?;
-    
+
     // Convert Vec<String> into Vec<Vec<u8>> (Vec of byte vectors)
     let mut matrix_bytes: Vec<Vec<u8>> = matrix
         .into_iter()
         .map(|s| s.into_bytes()) // Convert each String to Vec<u8>
         .collect();
-    
+
     // check the matrix based on the lines
     let n = matrix_bytes.len();
     let m = matrix_bytes[0].len();
@@ -80,7 +85,7 @@ pub fn solve04(lines: impl Iterator<Item = io::Result<String>>) -> io::Result<i6
             }
         }
     }
-    
+
     // part 2
     let part_2 = part2(&mut matrix_bytes);
     println!("Part 2: {}", part_2);
@@ -88,11 +93,10 @@ pub fn solve04(lines: impl Iterator<Item = io::Result<String>>) -> io::Result<i6
     Ok(ans)
 }
 
-
 #[cfg(test)]
 mod tests {
     use super::*;
-    
+
     #[test]
     fn test_part_1() {
         let input = vec![

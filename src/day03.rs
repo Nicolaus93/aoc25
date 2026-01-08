@@ -10,7 +10,7 @@ fn part_1(bytes: &[u8]) -> i64 {
         for j in i + 1..n {
             let d2 = (bytes[j] - b'0') as i64;
 
-            let num = d1 * 10 + d2;   // two-digit number
+            let num = d1 * 10 + d2; // two-digit number
             m = max(m, num);
         }
     }
@@ -19,11 +19,8 @@ fn part_1(bytes: &[u8]) -> i64 {
 
 const DEPTH: usize = 12;
 
-
 // Recursive function to find the maximum number by either including or skipping digits
-fn part_2(
-    bytes: &[u8],
-) -> i64 {
+fn part_2(bytes: &[u8]) -> i64 {
     let n = bytes.len();
     let mut max_value: i64 = 0;
     let mut remaining_digits = DEPTH;
@@ -63,7 +60,7 @@ pub fn solve03(lines: impl Iterator<Item = io::Result<String>>) -> io::Result<i6
         println!("part 1 {}", part_1(&bytes));
         let m = part_2(&bytes);
 
-        total += m;  // Add the result for the current line
+        total += m; // Add the result for the current line
     }
 
     Ok(total)
@@ -104,29 +101,22 @@ mod tests {
 
     #[test]
     fn test_part2_case_1() {
-        let input = vec![
-            Ok(String::from("987654321111111"))
-        ];
+        let input = vec![Ok(String::from("987654321111111"))];
         let result = solve03(input.into_iter()).unwrap();
         assert_eq!(result, 987654321111);
     }
 
     #[test]
     fn test_part2_case_2() {
-        let input = vec![
-            Ok(String::from("811111111111119"))
-        ];
+        let input = vec![Ok(String::from("811111111111119"))];
         let result = solve03(input.into_iter()).unwrap();
         assert_eq!(result, 811111111119);
     }
 
     #[test]
     fn test_part2_case_3() {
-        let input = vec![
-            Ok(String::from("234234234234278"))
-        ];
+        let input = vec![Ok(String::from("234234234234278"))];
         let result = solve03(input.into_iter()).unwrap();
         assert_eq!(result, 434234234278);
     }
-
 }

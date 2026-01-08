@@ -26,7 +26,7 @@ fn part2(matrix: &Vec<Vec<char>>) -> i64 {
         }
         let number: i64 = matrix
             .iter()
-            .take(rows - 1)          // skip last row
+            .take(rows - 1) // skip last row
             .map(|row| row[col])
             .filter_map(|c| c.to_digit(10)) // char → digit
             .fold(0_i64, |acc, d| acc * 10 + d as i64);
@@ -43,7 +43,7 @@ fn part2(matrix: &Vec<Vec<char>>) -> i64 {
     // println!("partial res: {}", block_res);
     res
 }
- 
+
 pub fn solve(lines: impl Iterator<Item = io::Result<String>>) -> io::Result<i64> {
     let mut matrix: Vec<Vec<i64>> = Vec::new();
     let mut ans = 0;
@@ -53,7 +53,7 @@ pub fn solve(lines: impl Iterator<Item = io::Result<String>>) -> io::Result<i64>
         let line_str = raw_line?;
         // collect all chars for part2
         matrix2.push(line_str.chars().collect());
-        
+
         let line = line_str.trim();
         if line.is_empty() {
             continue;
@@ -63,10 +63,7 @@ pub fn solve(lines: impl Iterator<Item = io::Result<String>>) -> io::Result<i64>
 
         // If every token is an int -> matrix row
         if tokens.iter().all(|t| t.parse::<i64>().is_ok()) {
-            let row: Vec<i64> = tokens
-                .iter()
-                .map(|t| t.parse::<i64>().unwrap())
-                .collect();
+            let row: Vec<i64> = tokens.iter().map(|t| t.parse::<i64>().unwrap()).collect();
             matrix.push(row);
         } else {
             for (i, op) in tokens.iter().enumerate() {
@@ -80,12 +77,11 @@ pub fn solve(lines: impl Iterator<Item = io::Result<String>>) -> io::Result<i64>
             }
         }
     }
-    
+
     println!("part1: {}", ans);
     let ans2 = part2(&matrix2);
     Ok(ans2)
 }
-
 
 #[cfg(test)]
 mod tests {

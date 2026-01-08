@@ -1,6 +1,6 @@
 use std::collections::{HashMap, HashSet};
-use std::io;
 use std::fmt;
+use std::io;
 
 #[derive(Debug)]
 struct Point3D {
@@ -17,16 +17,24 @@ impl fmt::Display for Point3D {
 }
 
 impl Point3D {
-
     // Method to create a Point3D from a string like "1,2,3"
     fn from_string(s: &str) -> Result<Self, &'static str> {
         let coords: Vec<&str> = s.split(',').collect();
         if coords.len() != 3 {
             return Err("Input string must be in the format 'x,y,z'");
         }
-        let x = coords[0].trim().parse::<i64>().map_err(|_| "Failed to parse x")?;
-        let y = coords[1].trim().parse::<i64>().map_err(|_| "Failed to parse y")?;
-        let z = coords[2].trim().parse::<i64>().map_err(|_| "Failed to parse z")?;
+        let x = coords[0]
+            .trim()
+            .parse::<i64>()
+            .map_err(|_| "Failed to parse x")?;
+        let y = coords[1]
+            .trim()
+            .parse::<i64>()
+            .map_err(|_| "Failed to parse y")?;
+        let z = coords[2]
+            .trim()
+            .parse::<i64>()
+            .map_err(|_| "Failed to parse z")?;
         Ok(Point3D { x, y, z })
     }
 
@@ -39,7 +47,6 @@ impl Point3D {
     }
 }
 
-
 pub fn solve(lines: impl Iterator<Item = io::Result<String>>) -> io::Result<i64> {
     let points: Vec<Point3D> = lines
         .filter_map(|line| {
@@ -49,10 +56,10 @@ pub fn solve(lines: impl Iterator<Item = io::Result<String>>) -> io::Result<i64>
             Point3D::from_string(&line).ok()
         })
         .collect();
-    
+
     // store the circuit for each point
     let mut circuit_map: Vec<usize> = (0..points.len()).collect();
-    
+
     // store each pairwise distance
     let mut distance_map: HashMap<i64, (usize, usize)> = HashMap::new();
     for i in 0..points.len() {
@@ -65,7 +72,7 @@ pub fn solve(lines: impl Iterator<Item = io::Result<String>>) -> io::Result<i64>
     // Sort the distances in ascending order
     let mut sorted_distances: Vec<_> = distance_map.keys().collect();
     sorted_distances.sort();
-    
+
     let n = 10000;
     for idx in 0..n {
         let dist = sorted_distances[idx];
@@ -83,10 +90,14 @@ pub fn solve(lines: impl Iterator<Item = io::Result<String>>) -> io::Result<i64>
         let unique_idxs: HashSet<usize> = circuit_map.iter().copied().collect();
         let num_unique_circuits = unique_idxs.len();
         if num_unique_circuits == 1 {
-            println!("{}, {} => {}", points[i], points[j], points[i].x * points[j].x);
+            println!(
+                "{}, {} => {}",
+                points[i],
+                points[j],
+                points[i].x * points[j].x
+            );
             break;
         }
-
     }
 
     // Print the final state of circuits
@@ -105,7 +116,8 @@ pub fn solve(lines: impl Iterator<Item = io::Result<String>>) -> io::Result<i64>
     counts.sort_by(|a, b| b.cmp(a)); // Sort in descending order
 
     // Take the top 3 counts, convert to i64, and multiply them together
-    let product: i64 = counts.iter()
+    let product: i64 = counts
+        .iter()
         .take(3)
         .fold(1i64, |acc, &count| acc * count as i64);
 
@@ -115,8 +127,7 @@ pub fn solve(lines: impl Iterator<Item = io::Result<String>>) -> io::Result<i64>
     println!();
 
     Ok(product)
-} 
-
+}
 
 #[cfg(test)]
 mod tests {

@@ -5,11 +5,10 @@ fn is_invalid(s: &str) -> bool {
     if n % 2 != 0 {
         return false;
     }
-    
+
     let mid = n / 2;
     &s[..mid] == &s[mid..]
 }
-
 
 fn is_really_invalid(s: &str) -> bool {
     let n = s.len();
@@ -18,30 +17,32 @@ fn is_really_invalid(s: &str) -> bool {
             return true;
         }
     }
-    
+
     false
 }
 
 fn all_chunks_equal(s: &str, n: usize) -> bool {
-    s.len() % n == 0 &&
-        s.as_bytes()
+    s.len() % n == 0
+        && s.as_bytes()
             .chunks(n)
             .map(|c| std::str::from_utf8(c).unwrap())
             .all(|chunk| chunk == &s[..n])
 }
-
 
 pub fn solve02(lines: impl Iterator<Item = io::Result<String>>) -> io::Result<i64> {
     let mut invalid_sum: i64 = 0;
     let mut part_1: i64 = 0;
     for line in lines {
         for part in line?.split(',') {
-            let (a, b) = part.split_once('-')
+            let (a, b) = part
+                .split_once('-')
                 .ok_or_else(|| io::Error::new(io::ErrorKind::InvalidData, "bad range"))?;
 
-            let n1: i64 = a.parse()
+            let n1: i64 = a
+                .parse()
                 .map_err(|e| io::Error::new(io::ErrorKind::InvalidData, e))?;
-            let n2: i64 = b.parse()
+            let n2: i64 = b
+                .parse()
                 .map_err(|e| io::Error::new(io::ErrorKind::InvalidData, e))?;
 
             for i in n1..=n2 {

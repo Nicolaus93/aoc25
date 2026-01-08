@@ -1,6 +1,6 @@
 use itertools::Itertools;
-use std::{fmt, io};
 use std::collections::BTreeSet;
+use std::{fmt, io};
 
 #[derive(Debug)]
 struct Point2D {
@@ -16,23 +16,25 @@ impl fmt::Display for Point2D {
 }
 
 impl Point2D {
-
     // Method to create a Point2D from a string like "1,2"
     fn from_string(s: &str) -> Result<Self, &'static str> {
         let coords: Vec<&str> = s.split(',').collect();
         if coords.len() != 2 {
             return Err("Input string must be in the format 'x,y,z'");
         }
-        let x = coords[0].trim().parse::<i64>().map_err(|_| "Failed to parse x")?;
-        let y = coords[1].trim().parse::<i64>().map_err(|_| "Failed to parse y")?;
-        Ok(Point2D { x, y})
+        let x = coords[0]
+            .trim()
+            .parse::<i64>()
+            .map_err(|_| "Failed to parse x")?;
+        let y = coords[1]
+            .trim()
+            .parse::<i64>()
+            .map_err(|_| "Failed to parse y")?;
+        Ok(Point2D { x, y })
     }
-
 }
 
-
 pub fn solve_part_1(lines: impl Iterator<Item = io::Result<String>>) -> io::Result<i64> {
-
     let points: Vec<Point2D> = lines
         .filter_map(|line| {
             // Filter out any lines that fail to read
@@ -45,14 +47,11 @@ pub fn solve_part_1(lines: impl Iterator<Item = io::Result<String>>) -> io::Resu
     let areas: Vec<i64> = points
         .iter()
         .tuple_combinations()
-        .map(|(a, b)| {
-            ((a.x - b.x).abs() + 1) * ((a.y - b.y).abs() + 1)
-        })
+        .map(|(a, b)| ((a.x - b.x).abs() + 1) * ((a.y - b.y).abs() + 1))
         .collect();
 
     Ok(*areas.iter().max().unwrap())
 }
-
 
 /// Inclusive rectangle area in "tiles" (matches your examples):
 /// width = |x2-x1| + 1, height = |y2-y1| + 1
@@ -78,12 +77,12 @@ fn point_in_poly_even_odd(p: (f64, f64), poly: &[Point2D]) -> bool {
         let (x2, y2) = (b.x as f64, b.y as f64);
 
         // Boundary check for axis-aligned edges
-        if (y1 == y2) {
+        if y1 == y2 {
             // horizontal
             if (py == y1) && (px >= x1.min(x2)) && (px <= x1.max(x2)) {
                 return true;
             }
-        } else if (x1 == x2) {
+        } else if x1 == x2 {
             // vertical
             if (px == x1) && (py >= y1.min(y2)) && (py <= y1.max(y2)) {
                 return true;
@@ -162,7 +161,7 @@ fn rect_sum(p: &[Vec<i128>], x1: usize, y1: usize, x2: usize, y2: usize) -> i128
 }
 
 pub fn solve(lines: impl Iterator<Item = io::Result<String>>) -> io::Result<i64> {
-    let mut points: Vec<Point2D> = lines
+    let points: Vec<Point2D> = lines
         .filter_map(|line| {
             let line = line.ok()?;
             Point2D::from_string(&line).ok()
@@ -223,7 +222,6 @@ pub fn solve(lines: impl Iterator<Item = io::Result<String>>) -> io::Result<i64>
 
     Ok(best)
 }
-
 
 #[cfg(test)]
 mod tests {

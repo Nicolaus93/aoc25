@@ -31,8 +31,13 @@ pub fn solve01(lines: impl Iterator<Item = io::Result<String>>) -> io::Result<i6
         let old_pos = pos;
         let delta = match letter {
             "L" => -n,
-            "R" =>  n,
-            _ => return Err(io::Error::new(io::ErrorKind::InvalidData, "bad instruction")),
+            "R" => n,
+            _ => {
+                return Err(io::Error::new(
+                    io::ErrorKind::InvalidData,
+                    "bad instruction",
+                ))
+            }
         };
 
         passes += count_crossings(old_pos, delta);

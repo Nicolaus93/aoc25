@@ -1,12 +1,11 @@
 use std::io;
 
-
 fn merge_intervals(intervals: &Vec<(i64, i64)>) -> Vec<(i64, i64)> {
     let mut merged: Vec<(i64, i64)> = Vec::new();
     if intervals.is_empty() {
         return merged;
     }
-    
+
     let mut last_int = intervals[0];
     for int in intervals.iter().skip(1) {
         if int.0 <= last_int.1 {
@@ -59,7 +58,6 @@ pub fn solve(lines: impl Iterator<Item = io::Result<String>>) -> io::Result<i64>
 
     Ok(fresh)
 }
-
 
 #[cfg(test)]
 mod tests {

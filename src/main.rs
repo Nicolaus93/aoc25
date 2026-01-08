@@ -1,5 +1,5 @@
-mod day02;
 mod day01;
+mod day02;
 mod day03;
 mod day04;
 mod day05;
@@ -27,7 +27,7 @@ fn main() -> io::Result<()> {
         9 => day09::solve,
         10 => day10::solve,
         11 => day11::solve,
-        _ => {|_| Ok(-1)}
+        _ => |_| Ok(-1),
     };
     let filename = format!("assets/input{:02}.txt", day);
     let file = File::open(filename)?;
